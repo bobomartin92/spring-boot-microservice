@@ -1,5 +1,6 @@
 package dev.decagon.employeeservice.controller;
 
+import dev.decagon.employeeservice.dto.ApiResponseDto;
 import dev.decagon.employeeservice.dto.EmployeeDto;
 import dev.decagon.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseDto> getEmployeeById(@PathVariable Long id) {
 
         return ResponseEntity.ok(employeeService.getEmployeeById(id));
     }
