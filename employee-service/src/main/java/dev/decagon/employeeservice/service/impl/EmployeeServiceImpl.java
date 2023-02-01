@@ -3,6 +3,7 @@ package dev.decagon.employeeservice.service.impl;
 import dev.decagon.employeeservice.dto.ApiResponseDto;
 import dev.decagon.employeeservice.dto.DepartmentDto;
 import dev.decagon.employeeservice.dto.EmployeeDto;
+import dev.decagon.employeeservice.dto.OrganizationDto;
 import dev.decagon.employeeservice.entity.Employee;
 import dev.decagon.employeeservice.mapper.EmployeeMapper;
 import dev.decagon.employeeservice.repository.EmployeeRepository;
@@ -53,9 +54,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDto(employee);
 
+        OrganizationDto organizationDto = webClient.get()
+                .uri("http://localhost:8083/api/organizations/" + employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDto.class)
+                .block();
+
         ApiResponseDto apiResponseDto = new ApiResponseDto();
         apiResponseDto.setEmployee(employeeDto);
         apiResponseDto.setDepartment(departmentDto);
+        apiResponseDto.setOrganization(organizationDto);
 
         return apiResponseDto;
     }
